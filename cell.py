@@ -1,7 +1,7 @@
 from graphics import Window, Line, Point
 
 class Cell():
-    def __init__(self,window: Window):
+    def __init__(self,window: Window = None):
         self.__x1 = -1
         self.__y1 = -1
         self.__x2 = -1
@@ -29,6 +29,8 @@ class Cell():
             self.__win.draw_line(Line(Point(x1, y2), Point(x2, y2)))
     
     def draw_move(self,to_cell, undo = False):
+        if self.__win is None:
+            return
         center_self = Point((self.__x1 + self.__x2) / 2, (self.__y1 + self.__y2) / 2)
         center_to = Point((to_cell.__x1 + to_cell.__x2) / 2, (to_cell.__y1 + to_cell.__y2) / 2)
         if undo :
