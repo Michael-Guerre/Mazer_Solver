@@ -1,5 +1,6 @@
 
 
+import random
 from time import sleep
 from cell import Cell
 
@@ -14,6 +15,7 @@ class Maze():
         cell_size_x,
         cell_size_y,
         win=None,
+        seed=None,
     ):
         self.__x1 = x1
         self.__y1 = y1
@@ -23,8 +25,11 @@ class Maze():
         self.__cell_size_y = cell_size_y
         self.__win = win
         self.__cells = []
+        if seed is not None:
+            random.seed(seed)
         self.__create_cells()
         self.__break_entrance_and_exit()
+        self.__break_calls_r(0, 0)
 
     def __create_cells(self):
         for col in range(self.__num_cols):
@@ -57,3 +62,36 @@ class Maze():
             # Break the bottom wall of the last cell
             self.__cells[self.__num_cols - 1][self.__num_rows - 1].has_bottom_wall = False
             self.__draw_cell(self.__num_cols - 1, self.__num_rows - 1)
+    
+    def __break_calls_r(self,i,j):
+        self.__cells[i][j].visited = True
+        while 1:
+            directions = []
+            if i > 0 and not self.__cells[i - 1][j].visited:
+                directions.append((i-1,j))
+            if i < self.__num_cols - 1 and not self.__cells[i + 1][j].visited:
+                directions.append((i+1,j))
+            if j > 0 and not self.__cells[i][j - 1].visited:
+                directions.append((i,j-1))
+            if j < self.__num_rows - 1 and not self.__cells[i][j + 1].visited:
+                directions.append((i,j+1))
+            if not directions:
+                return
+            i2, j2 = random.choice(directions)
+            if i2 < i:
+                self.__cells[i][j].has_left_wall = False
+                self.__cells[i2][j2].has_right_wall = False
+            elif i2 > i:
+                self.__cells[i][j].has_right_wall = False
+                self.__cells[i2][j2].has_left_wall = False
+            elif j2 < j:
+                self.__cells[i][j].has_top_wall = False
+                self.__cells[i2][j2].has_bottom_wall = False
+            elif j2 > j:
+                self.__cells[i][j].has_bottom_wall = False
+                self.__cells[i2][j2].has_top_wall = False
+            self.__draw_cell(i, j)
+            self.__draw_cell(i2, j2)
+            self.animate()
+            self.__break_calls_r(i2, j2)
+        
