@@ -8,10 +8,11 @@ def main():
     maze = Maze(
         x1=10,
         y1=10,
-        num_rows=20,
-        num_cols=20,
+        num_rows=10,
+        num_cols=10,
         cell_size_x=50,
-        cell_size_y=50
+        cell_size_y=50,
+        win=win
     )
     win.wait_for_close()
 
