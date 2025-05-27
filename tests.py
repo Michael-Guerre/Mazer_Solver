@@ -43,5 +43,21 @@ class Tests(unittest.TestCase):
         m1._Maze__break_entrance_and_exit()
         # This test is just to ensure that the method can be called without error.
         self.assertTrue(True)
+
+    def test_maze_reset_cells_visited(self):
+        m1 = Maze(0, 0, 5, 5, 10, 10)
+        for col in range(len(m1._Maze__cells)):
+            for row in range(len(m1._Maze__cells[col])):
+                m1._Maze__cells[col][row].visited = True
+        m1._Maze__reset_cells_visited()
+        for col in range(len(m1._Maze__cells)):
+            for row in range(len(m1._Maze__cells[col])):
+                self.assertFalse(m1._Maze__cells[col][row].visited)
+
+    def test_maze_break_calls_r(self):
+        m1 = Maze(0, 0, 5, 5, 10, 10)
+        m1._Maze__break_calls_r(0, 0)
+        # This test is just to ensure that the method can be called without error.
+        self.assertTrue(True)
 if __name__ == "__main__":
     unittest.main()

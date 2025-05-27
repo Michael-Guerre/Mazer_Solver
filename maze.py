@@ -29,7 +29,9 @@ class Maze():
             random.seed(seed)
         self.__create_cells()
         self.__break_entrance_and_exit()
-        self.__break_calls_r(0, 0)
+        if self.__num_rows > 0 and self.__num_cols > 0:
+            self.__break_calls_r(0, 0)
+            self.__reset_cells_visited()
 
     def __create_cells(self):
         for col in range(self.__num_cols):
@@ -94,4 +96,8 @@ class Maze():
             self.__draw_cell(i2, j2)
             self.animate()
             self.__break_calls_r(i2, j2)
-        
+
+    def __reset_cells_visited(self):
+        for col in self.__cells:
+            for cell in col:
+                cell.visited = False
