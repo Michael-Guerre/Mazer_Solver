@@ -8,12 +8,13 @@ def main():
     maze = Maze(
         x1=10,
         y1=10,
-        num_rows=10,
-        num_cols=10,
-        cell_size_x=50,
-        cell_size_y=50,
+        num_rows=20,
+        num_cols=20,
+        cell_size_x=25,
+        cell_size_y=25,
         win=win
     )
+    maze.solve()
     win.wait_for_close()
 
 
